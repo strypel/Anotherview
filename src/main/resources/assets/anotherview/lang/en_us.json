@@ -1,0 +1,11 @@
+{
+    "key.categories.anotherview": "Anotherview",
+    "key.anotherview.settings": "Settings key",
+
+    "message.change_mode": "View controller mode",
+
+    "screen.anotherview.avsettings": "Anotherview settings",
+    "screen.anotherview.avsettings.mode": "Mode",
+    "screen.anotherview.avsettings.raylength": "Ray length",
+    "screen.anotherview.avsettings.ignorefoliage": "Ignore the foliage"
+}
