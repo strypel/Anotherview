@@ -9,7 +9,6 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 public class AVSettingsScreen extends Screen {
     public static boolean TEST_PAUSE_MENU_BUTTON = false;
@@ -58,12 +57,12 @@ public class AVSettingsScreen extends Screen {
         renderBackground(poseStack);
         super.render(poseStack, p_96563_, p_96564_, p_96565_);
         this.renderScaledText(poseStack,this.title,this.width / 2, 40,16777215,1.4f,true);
-        this.renderScaledText(poseStack,new TranslatableComponent("screen.anotherview.avsettings.mode"),this.width / 2,this.height / 4 + 12 + -16,16777215,1f,true);
+        this.renderScaledText(poseStack,Component.translatable("screen.anotherview.avsettings.mode"),this.width / 2,this.height / 4 + 12 + -16,16777215,1f,true);
         switch (ViewControllerImpl.getViewController().getMode()){
             case OFF -> {}
             case RAY_CAST -> {
-                this.renderScaledText(poseStack,new TranslatableComponent("screen.anotherview.avsettings.raylength"),this.width / 2,this.height / 4 + 48 + -16,16777215,1f,true);
-                this.renderScaledText(poseStack,new TranslatableComponent("screen.anotherview.avsettings.ignorefoliage"),this.width / 2,this.height / 4 + 86 + -16,16777215,1f,true);
+                this.renderScaledText(poseStack,Component.translatable("screen.anotherview.avsettings.raylength"),this.width / 2,this.height / 4 + 48 + -16,16777215,1f,true);
+                this.renderScaledText(poseStack,Component.translatable("screen.anotherview.avsettings.ignorefoliage"),this.width / 2,this.height / 4 + 86 + -16,16777215,1f,true);
             }
         }
     }

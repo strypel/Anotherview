@@ -1,30 +1,20 @@
 package com.strypel.anotherview.event;
 
 import com.strypel.anotherview.Anotherview;
-import com.strypel.anotherview.client.KeyInit;
+import com.strypel.anotherview.client.KeyBinding;
 import com.strypel.anotherview.client.view.ViewController;
 import com.strypel.anotherview.client.view.ViewControllerImpl;
 import com.strypel.anotherview.client.view.ViewControllerMode;
-import com.strypel.anotherview.config.AnotherviewClientConfigs;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.resources.sounds.SimpleSoundInstance;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.sounds.SoundEvents;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.ForgeHooksClient;
+import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.server.ServerStartedEvent;
-import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import org.spongepowered.asm.mixin.injection.Inject;
 
 public class ClientEvents {
     @Mod.EventBusSubscriber(modid = Anotherview.MODID,bus = Mod.EventBusSubscriber.Bus.MOD,value = Dist.CLIENT)
@@ -32,7 +22,11 @@ public class ClientEvents {
         @SubscribeEvent
         public static void clientSetup(FMLClientSetupEvent event){
             ViewControllerImpl.setViewController(new ViewController(ViewControllerMode.RAY_CAST,3));
-            KeyInit.init();
+        }
+
+        @SubscribeEvent
+        public static void onKeyRegister(RegisterKeyMappingsEvent event) {
+            event.register(KeyBinding.SETTINGS_KEY);
         }
     }
 
@@ -40,10 +34,25 @@ public class ClientEvents {
     public final class ClientForgeEvents{
         private static boolean wflag = false;
 
+        @SubscribeEvent
+        public static void onKeyInput(InputEvent.Key event) {
+            if(KeyBinding.SETTINGS_KEY.consumeClick()) {
+                //Minecraft.getInstance().setScreen(new AVSettingsScreen(new TranslatableComponent("screen.anotherview.avsettings")));
+                try {
+                    ViewController controller = ViewControllerImpl.getViewController();
+                    ViewControllerImpl.getViewController().setMode(ViewControllerMode.getNextBy(controller.getMode()));
+                    Minecraft mc = Minecraft.getInstance();
+                    LocalPlayer player = mc.player;
+                    player.displayClientMessage(Component.nullToEmpty(Component.translatable("message.change_mode").getString() + ": §e" + ViewControllerImpl.getViewController().getMode().getTITLE()),true);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
         //@SuppressWarnings("resource")
         @SubscribeEvent
         public static void clientTick(TickEvent.ClientTickEvent event){
-            KeyInit.tick();
 
             if (event.phase == TickEvent.Phase.END) {
                 Minecraft mc = Minecraft.getInstance();
