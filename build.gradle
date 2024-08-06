@@ -6,7 +6,6 @@ buildscript {
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath 'org.spongepowered:mixingradle:0.7.+'
     }
 }
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
@@ -15,7 +14,6 @@ plugins {
     id 'maven-publish'
 }
 apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'org.spongepowered.mixin'
 
 version = 'alpha-1.0.2'
 group = 'com.strypel.anotherview' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -39,7 +37,7 @@ minecraft {
     //
     // Use non-default mappings at your own risk. They may not always work.
     // Simply re-run your setup task after changing the mappings to update your workspace.
-    mappings channel: 'official', version: '1.18.2'
+    mappings channel: 'official', version: '1.19.2'
 
     // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg') // Currently, this location cannot be changed from the default.
 
@@ -157,9 +155,7 @@ dependencies {
     // Specify the version of Minecraft to use. If this is any group other than 'net.minecraft', it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.18.2-40.2.21'
-
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    minecraft 'net.minecraftforge:forge:1.19.2-43.4.2'
 
     // Real mod deobf dependency examples - these get remapped to your current mappings
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
@@ -175,17 +171,6 @@ dependencies {
 }
 // Example for how to get properties into the manifest for reading at runtime.
 
-mixin {
-    add sourceSets.main, 'anotherview.refmap.json'
-    config 'anotherview.mixins.json'
-
-    debug.verbose = true
-    debug.export = true
-    dumpTargetOnFailure = true
-
-    quiet
-}
-
 jar {
     manifest {
         attributes([
@@ -196,7 +181,6 @@ jar {
                 "Implementation-Version"  : project.jar.archiveVersion,
                 "Implementation-Vendor"   : "strypel",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs": "anotherview.mixins.json"
         ])
     }
 }
