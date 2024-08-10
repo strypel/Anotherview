@@ -21,7 +21,7 @@ public class AVSettingsScreen extends Screen {
     @Override
     protected void init() {
         super.init();
-        this.addWidget(new Button(this.width / 2 - 102, this.height / 4 + 24 + -16, 204, 20,
+        this.addButton(new Button(this.width / 2 - 102, this.height / 4 + 24 + -16, 204, 20,
                 ITextComponent.nullToEmpty(ViewControllerImpl.getViewController().getMode().getTITLE()), (p_96337_) -> {
             ViewControllerMode previous = ViewControllerImpl.getViewController().getMode();
             ViewControllerImpl.getViewController().setMode(ViewControllerMode.getNextBy(previous));
@@ -30,7 +30,7 @@ public class AVSettingsScreen extends Screen {
         switch (ViewControllerImpl.getViewController().getMode()){
             case OFF -> {}
             case RAY_CAST -> {
-                this.addWidget(new Button(this.width / 2 - 102, this.height / 4 + 24 + -16, 204, 20,
+                this.addButton(new Button(this.width / 2 - 102, this.height / 4 + 24 + -16, 204, 20,
                         ITextComponent.nullToEmpty(ViewControllerImpl.getViewController().getMode().getTITLE()), (p_96337_) -> {
                     ViewControllerMode previous = ViewControllerImpl.getViewController().getMode();
                     ViewControllerImpl.getViewController().setMode(ViewControllerMode.getNextBy(previous));
@@ -41,10 +41,10 @@ public class AVSettingsScreen extends Screen {
                     ViewControllerImpl.getViewController().ignoreFoliage = !ViewControllerImpl.getViewController().ignoreFoliage;
                     Minecraft.getInstance().setScreen(this);
                 });
-                this.addWidget(foliageButton);
+                this.addButton(foliageButton);
             }
         }
-        this.addWidget(new Button(this.width / 2 - 100, this.height / 6 + 168, 200, 20, DialogTexts.GUI_DONE, (p_96257_) -> {
+        this.addButton(new Button(this.width / 2 - 100, this.height / 6 + 168, 200, 20, DialogTexts.GUI_DONE, (p_96257_) -> {
             this.minecraft.setScreen(null);
         }));
     }

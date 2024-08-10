@@ -21,7 +21,7 @@ public class PauseScreenMixin extends Screen {
     @Inject(method = "createPauseMenu", at = @At(value = "TAIL"))
     private void createPauseScreen(CallbackInfo ci){
         if(AVSettingsScreen.TEST_PAUSE_MENU_BUTTON){
-            this.addWidget(new Button(this.width / 2 + 4 + 98 + 2, this.height / 4 + 72 + -16, 20, 20, ITextComponent.nullToEmpty(""), (p_96331_) -> {
+            this.addButton(new Button(this.width / 2 + 4 + 98 + 2, this.height / 4 + 72 + -16, 20, 20, ITextComponent.nullToEmpty(""), (p_96331_) -> {
                 this.minecraft.setScreen(new AVSettingsScreen(new TranslationTextComponent("screen.anotherview.avsettings")));
             }));
         }
