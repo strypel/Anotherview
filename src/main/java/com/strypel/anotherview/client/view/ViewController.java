@@ -1,24 +1,19 @@
 package com.strypel.anotherview.client.view;
 
-import com.mojang.math.Vector3f;
-import com.strypel.anotherview.Anotherview;
+
 import com.strypel.anotherview.client.сhecking.Ray;
 import com.strypel.anotherview.client.сhecking.Raycast;
-import com.strypel.anotherview.config.AnotherviewClientConfigs;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +44,7 @@ public class ViewController {
             double playerHeight = player.getBbHeight();
             Vec3 start = new Vec3(player.position().x,player.position().y + playerHeight,player.position().z);
 
-            Ray ray = new Ray(start, new Vec3(Vector3f.YP).normalize(),rayLength);
+            Ray ray = new Ray(start, com.strypel.anotherview.util.Vec3.YP.normalize(),rayLength);
             BlockState state = Raycast.cast(ray,level,this.ignoredBlocks,this.ignoreFoliage ? this.ignoredTags : new ArrayList<>());
 
             if(state != null){

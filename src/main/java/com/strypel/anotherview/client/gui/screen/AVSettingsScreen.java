@@ -21,35 +21,35 @@ public class AVSettingsScreen extends Screen {
     @Override
     protected void init() {
         super.init();
-        this.addRenderableWidget(new Button(this.width / 2 - 102, this.height / 4 + 24 + -16, 204, 20,
+        this.addRenderableWidget(Button.builder(
                 Component.nullToEmpty(ViewControllerImpl.getViewController().getMode().getTITLE()), (p_96337_) -> {
             ViewControllerMode previous = ViewControllerImpl.getViewController().getMode();
             ViewControllerImpl.getViewController().setMode(ViewControllerMode.getNextBy(previous));
             Minecraft.getInstance().setScreen(this);
-        }));
+        }).pos(this.width / 2 - 102, this.height / 4 + 24 + -16).size(204, 20).build());
         switch (ViewControllerImpl.getViewController().getMode()){
             case OFF -> {}
             case RAY_CAST -> {
                 this.editbox_r = new EditBox(this.font,this.width / 2 - 102, this.height / 4 + 60 + -16,204, 20,Component.nullToEmpty("Ray length"));
                 this.editbox_r.setValue(String.valueOf(ViewControllerImpl.getViewController().rayLength));
                 this.addRenderableWidget(editbox_r);
-                this.addRenderableWidget(new Button(this.width / 2 - 102, this.height / 4 + 24 + -16, 204, 20,
+                this.addRenderableWidget(Button.builder(
                         Component.nullToEmpty(ViewControllerImpl.getViewController().getMode().getTITLE()), (p_96337_) -> {
                     ViewControllerMode previous = ViewControllerImpl.getViewController().getMode();
                     ViewControllerImpl.getViewController().setMode(ViewControllerMode.getNextBy(previous));
                     Minecraft.getInstance().setScreen(this);
-                }));
+                }).pos(this.width / 2 - 102, this.height / 4 + 24 + -16).size( 204, 20).build());
                 String foliageText = ViewControllerImpl.getViewController().ignoreFoliage ? "Ignore" : "Сollide";
-                foliageButton = new Button(this.width / 2 - 102,this.height / 4 + 98 + -16,200,20,Component.nullToEmpty(foliageText),p_93751_ -> {
+                foliageButton = Button.builder(Component.nullToEmpty(foliageText),p_93751_ -> {
                     ViewControllerImpl.getViewController().ignoreFoliage = !ViewControllerImpl.getViewController().ignoreFoliage;
                     Minecraft.getInstance().setScreen(this);
-                });
+                }).pos(this.width / 2 - 102,this.height / 4 + 98 + -16).size(200,20).build();
                 this.addRenderableWidget(foliageButton);
             }
         }
-        this.addRenderableWidget(new Button(this.width / 2 - 100, this.height / 6 + 168, 200, 20, CommonComponents.GUI_DONE, (p_96257_) -> {
+        this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, (p_96257_) -> {
             this.minecraft.setScreen(null);
-        }));
+        }).pos(this.width / 2 - 100, this.height / 6 + 168).size( 200, 20).build());
     }
 
     @Override

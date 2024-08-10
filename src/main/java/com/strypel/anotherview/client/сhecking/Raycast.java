@@ -2,8 +2,10 @@ package com.strypel.anotherview.client.сhecking;
 
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -17,7 +19,8 @@ public class Raycast {
             ray.increase();
 
             boolean f = true;
-            BlockState block = level.getBlockState(new BlockPos(ray.getEnd()));
+            Vec3i end = new Vec3i(Mth.floor(ray.getEnd().x), Mth.floor(ray.getEnd().y), Mth.floor(ray.getEnd().z));
+            BlockState block = level.getBlockState(new BlockPos(end));
             if(block.is(Blocks.AIR)) {
                 f = false;
             }
