@@ -1,7 +1,7 @@
 package com.strypel.anotherview.mixin;
 
-import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ActiveRenderInfo;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(Camera.class)
+@Mixin(ActiveRenderInfo.class)
 public abstract class CameraMixin {
 
     private double dist = 0;
@@ -28,8 +28,8 @@ public abstract class CameraMixin {
         }
     }
 
-    @Redirect(method = "setup", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Camera;getMaxZoom(D)D"))
-    public double getMaxZoom(Camera instance, double f){
+    @Redirect(method = "setup", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ActiveRenderInfo;getMaxZoom(D)D"))
+    public double getMaxZoom(ActiveRenderInfo instance, double f){
         long time = System.nanoTime();
         double deltaTime = ((time - lastTime) / 1000000000.0);
         this.lastTime = time;
