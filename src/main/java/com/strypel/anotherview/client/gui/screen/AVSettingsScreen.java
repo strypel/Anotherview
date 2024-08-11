@@ -55,7 +55,7 @@ public class AVSettingsScreen extends Screen {
 
     @Override
     public void render(GuiGraphics graphics, int p_96563_, int p_96564_, float p_96565_) {
-        renderBackground(graphics);
+        renderBackground(graphics,p_96563_,p_96564_,p_96565_);
         super.render(graphics, p_96563_, p_96564_, p_96565_);
         this.renderScaledText(graphics,this.title,this.width / 2, 40,16777215,1.4f,true);
         this.renderScaledText(graphics,Component.translatable("screen.anotherview.avsettings.mode"),this.width / 2,this.height / 4 + 12 + -16,16777215,1f,true);
