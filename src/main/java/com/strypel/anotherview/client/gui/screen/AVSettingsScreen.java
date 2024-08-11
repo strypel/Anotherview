@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.strypel.anotherview.client.view.ViewControllerImpl;
 import com.strypel.anotherview.client.view.ViewControllerMode;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
@@ -53,32 +54,32 @@ public class AVSettingsScreen extends Screen {
     }
 
     @Override
-    public void render(PoseStack poseStack, int p_96563_, int p_96564_, float p_96565_) {
-        renderBackground(poseStack);
-        super.render(poseStack, p_96563_, p_96564_, p_96565_);
-        this.renderScaledText(poseStack,this.title,this.width / 2, 40,16777215,1.4f,true);
-        this.renderScaledText(poseStack,Component.translatable("screen.anotherview.avsettings.mode"),this.width / 2,this.height / 4 + 12 + -16,16777215,1f,true);
+    public void render(GuiGraphics graphics, int p_96563_, int p_96564_, float p_96565_) {
+        renderBackground(graphics);
+        super.render(graphics, p_96563_, p_96564_, p_96565_);
+        this.renderScaledText(graphics,this.title,this.width / 2, 40,16777215,1.4f,true);
+        this.renderScaledText(graphics,Component.translatable("screen.anotherview.avsettings.mode"),this.width / 2,this.height / 4 + 12 + -16,16777215,1f,true);
         switch (ViewControllerImpl.getViewController().getMode()){
             case OFF -> {}
             case RAY_CAST -> {
-                this.renderScaledText(poseStack,Component.translatable("screen.anotherview.avsettings.raylength"),this.width / 2,this.height / 4 + 48 + -16,16777215,1f,true);
-                this.renderScaledText(poseStack,Component.translatable("screen.anotherview.avsettings.ignorefoliage"),this.width / 2,this.height / 4 + 86 + -16,16777215,1f,true);
+                this.renderScaledText(graphics,Component.translatable("screen.anotherview.avsettings.raylength"),this.width / 2,this.height / 4 + 48 + -16,16777215,1f,true);
+                this.renderScaledText(graphics,Component.translatable("screen.anotherview.avsettings.ignorefoliage"),this.width / 2,this.height / 4 + 86 + -16,16777215,1f,true);
             }
         }
     }
 
-    protected void renderScaledText(PoseStack stack,Component text,int x,int y,int color,float scale,boolean centred){
-        stack.pushPose();
-        stack.scale(scale,scale,scale);
+    protected void renderScaledText(GuiGraphics graphics,Component text,int x,int y,int color,float scale,boolean centred){
+        graphics.pose().pushPose();
+        graphics.pose().scale(scale,scale,scale);
         if(centred){
-            this.drawCenteredString(stack,this.font, text, (int) (x * (1 / scale)), (int) (y * (1 / scale)), color);
+            graphics.drawCenteredString(this.font, text, (int) (x * (1 / scale)), (int) (y * (1 / scale)), color);
         } else {
-            this.drawString(stack,this.font, text, (int) (x * (1 / scale)), (int) (y * (1 / scale)), color);
+            graphics.drawString(this.font, text, (int) (x * (1 / scale)), (int) (y * (1 / scale)), color);
         }
-        stack.popPose();
+        graphics.pose().popPose();
     }
-    protected void renderScaledText(PoseStack stack,Component text,int x,int y,int color,float scale){
-        this.renderScaledText(stack,text,x,y,color,scale,false);
+    protected void renderScaledText(GuiGraphics graphics,Component text,int x,int y,int color,float scale){
+        this.renderScaledText(graphics,text,x,y,color,scale,false);
     }
 
     @Override
