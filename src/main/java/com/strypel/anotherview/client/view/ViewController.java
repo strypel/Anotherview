@@ -1,6 +1,8 @@
 package com.strypel.anotherview.client.view;
 
 
+import com.github.exopandora.shouldersurfing.api.model.Perspective;
+import com.github.exopandora.shouldersurfing.client.ShoulderSurfingImpl;
 import com.strypel.anotherview.client.сhecking.Ray;
 import com.strypel.anotherview.client.сhecking.Raycast;
 import net.minecraft.client.CameraType;
@@ -14,6 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +30,7 @@ public class ViewController {
     private List<TagKey<Block>> ignoredTags = List.of(
             BlockTags.LEAVES
     );
+    private boolean shoulders = false;
     public double rayLength = 3;
     public boolean firstPersonView = false;
     public boolean ignoreFoliage = true;
@@ -49,10 +53,21 @@ public class ViewController {
 
             if(state != null){
                 if(!firstPersonView) {
+                    if(ModList.get().isLoaded("shouldersurfing")){
+                        if(ShoulderSurfingImpl.getInstance().isShoulderSurfing()){
+                            shoulders = true;
+                        }
+                    }
                     CameraType nowCameraType = Minecraft.getInstance().options.getCameraType();
                     if(CameraType.FIRST_PERSON != nowCameraType){
                         lastCameraType = nowCameraType;
                         Minecraft.getInstance().options.setCameraType(CameraType.FIRST_PERSON);
+                        if(ModList.get().isLoaded("shouldersurfing")){
+                            if(shoulders){
+                                ShoulderSurfingImpl.getInstance().changePerspective(Perspective.SHOULDER_SURFING);
+                                shoulders = false;
+                            }
+                        }
                         firstPersonView = true;
                     }
                 }
