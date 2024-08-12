@@ -1,5 +1,7 @@
 package com.strypel.anotherview.client.view;
 
+import com.github.exopandora.shouldersurfing.api.model.Perspective;
+import com.github.exopandora.shouldersurfing.client.ShoulderSurfingImpl;
 import com.strypel.anotherview.client.сhecking.Ray;
 import com.strypel.anotherview.client.сhecking.Raycast;
 import net.minecraft.block.Block;
@@ -13,6 +15,7 @@ import net.minecraft.tags.ITag;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,7 @@ public class ViewController {
     private List<ITag.INamedTag<Block>> ignoredTags = List.of(
             BlockTags.LEAVES
     );
+    public boolean shoulders = true;
     public double rayLength = 3;
     public boolean firstPersonView = false;
     public boolean ignoreFoliage = true;
@@ -48,6 +52,11 @@ public class ViewController {
 
             if(state != null){
                 if(!firstPersonView) {
+                    if(ModList.get().isLoaded("shouldersurfing")){
+                        if(ShoulderSurfingImpl.getInstance().isShoulderSurfing()){
+                            shoulders = true;
+                        }
+                    }
                     PointOfView nowCameraType = Minecraft.getInstance().options.getCameraType();
                     if(PointOfView.FIRST_PERSON.FIRST_PERSON != nowCameraType){
                         lastCameraType = nowCameraType;
@@ -59,6 +68,12 @@ public class ViewController {
                 if(firstPersonView) {
                     PointOfView newCameraType = lastCameraType != null ? lastCameraType : PointOfView.THIRD_PERSON_BACK;
                     Minecraft.getInstance().options.setCameraType(newCameraType);
+                    if(ModList.get().isLoaded("shouldersurfing")){
+                        if(shoulders){
+                            ShoulderSurfingImpl.getInstance().changePerspective(Perspective.SHOULDER_SURFING);
+                            shoulders = false;
+                        }
+                    }
                     firstPersonView = false;
                 }
             }
