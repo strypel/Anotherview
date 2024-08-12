@@ -1,5 +1,6 @@
 package com.strypel.anotherview;
 
+import com.github.exopandora.shouldersurfing.api.client.ShoulderSurfing;
 import com.mojang.logging.LogUtils;
 import com.strypel.anotherview.client.view.ViewController;
 import com.strypel.anotherview.client.view.ViewControllerImpl;

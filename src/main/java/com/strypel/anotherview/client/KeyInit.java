@@ -1,5 +1,8 @@
 package com.strypel.anotherview.client;
 
+import com.github.exopandora.shouldersurfing.api.client.ShoulderSurfing;
+import com.github.exopandora.shouldersurfing.client.ShoulderSurfingImpl;
+import com.github.exopandora.shouldersurfing.config.Config;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.strypel.anotherview.Anotherview;
 import com.strypel.anotherview.client.view.ViewController;
@@ -41,6 +44,7 @@ public final class KeyInit {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+
         }
     }
 }
