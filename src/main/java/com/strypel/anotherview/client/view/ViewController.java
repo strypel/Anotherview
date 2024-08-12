@@ -3,6 +3,11 @@ package com.strypel.anotherview.client.view;
 
 import com.strypel.anotherview.client.сhecking.Ray;
 import com.strypel.anotherview.client.сhecking.Raycast;
+import com.teamderpy.shouldersurfing.ShoulderSurfing;
+import com.teamderpy.shouldersurfing.client.ShoulderHelper;
+import com.teamderpy.shouldersurfing.client.ShoulderInstance;
+import com.teamderpy.shouldersurfing.config.Config;
+import com.teamderpy.shouldersurfing.config.Perspective;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -14,6 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +33,7 @@ public class ViewController {
     private List<TagKey<Block>> ignoredTags = List.of(
             BlockTags.LEAVES
     );
+    private boolean shoulders = false;
     public double rayLength = 3;
     public boolean firstPersonView = false;
     public boolean ignoreFoliage = true;
@@ -51,6 +58,11 @@ public class ViewController {
                 if(!firstPersonView) {
                     CameraType nowCameraType = Minecraft.getInstance().options.getCameraType();
                     if(CameraType.FIRST_PERSON != nowCameraType){
+                        if(ModList.get().isLoaded("shouldersurfing")){
+                            if(Config.CLIENT.getDefaultPerspective().equals(Perspective.SHOULDER_SURFING)){
+                                shoulders = true;
+                            }
+                        }
                         lastCameraType = nowCameraType;
                         Minecraft.getInstance().options.setCameraType(CameraType.FIRST_PERSON);
                         firstPersonView = true;
@@ -60,6 +72,12 @@ public class ViewController {
                 if(firstPersonView) {
                     CameraType newCameraType = lastCameraType != null ? lastCameraType : CameraType.THIRD_PERSON_BACK;
                     Minecraft.getInstance().options.setCameraType(newCameraType);
+                    if(ModList.get().isLoaded("shouldersurfing")){
+                        if(shoulders){
+                            ShoulderInstance.getInstance().changePerspective(Perspective.SHOULDER_SURFING);
+                            shoulders = false;
+                        }
+                    }
                     firstPersonView = false;
                 }
             }
