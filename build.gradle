@@ -17,7 +17,7 @@ plugins {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 
-version = "alpha1.0.3"
+version = "rse1.0.0"
 group = 'com.strypel.anotherview' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "anotherview-${mc_version}"
 
