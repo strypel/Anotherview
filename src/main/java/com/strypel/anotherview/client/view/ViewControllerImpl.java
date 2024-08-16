@@ -19,9 +19,13 @@ public class ViewControllerImpl {
 
     public static void save(){
         AnotherviewClientConfigs.MODE.set(viewController.getMode().getTITLE());
+        AnotherviewClientConfigs.RAY_LENGTH.set(viewController.rayLength);
+        AnotherviewClientConfigs.IGNORE_FOLIAGE.set(viewController.ignoreFoliage);
     }
 
     public static void load(){
         viewController.setMode(ViewControllerMode.getModeBy(AnotherviewClientConfigs.MODE.get()));
+        viewController.rayLength = AnotherviewClientConfigs.RAY_LENGTH.get();
+        viewController.ignoreFoliage = AnotherviewClientConfigs.IGNORE_FOLIAGE.get();
     }
 }
